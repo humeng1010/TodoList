@@ -5,6 +5,7 @@ import {
     Input,
     Select,
 } from 'antd';
+import { register } from '../../api';
 const { Option } = Select;
 
 const formItemLayout = {
@@ -39,13 +40,18 @@ const tailFormItemLayout = {
 };
 const RegisterForm = (props) => {
     const [form] = Form.useForm();
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         // 注册api，如果成功则关闭模态框，并提示成功，失败则不关闭，提示失败信息
-        console.log('Received values of form: ', values);
-        props.setIsModalOpen(false)
+        try {
+            const data = await register(JSON.stringify(values))
+            console.log(data);
+            console.log('Received values of form: ', values);
+            props.setIsModalOpen(false)
+
+        } catch (error) {
+            console.log(error);
+        }
     };
-
-
 
     return (
         <Form
@@ -110,7 +116,7 @@ const RegisterForm = (props) => {
             </Form.Item>
 
             <Form.Item
-                name="nickname"
+                name="nick"
                 label="昵称"
                 tooltip="您想要别人怎么称呼您?"
                 rules={[

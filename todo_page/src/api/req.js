@@ -8,7 +8,11 @@ import "nprogress/nprogress.css";
 const requests = axios.create({
     baseURL: "/api",
     // 请求超时的时间5s
-    timeout: 5000
+    timeout: 5000,
+    headers: {
+        "Content-Type": "application/json;charset=UTF-8"
+    }
+
 })
 
 // 请求拦截器
@@ -24,6 +28,7 @@ requests.interceptors.response.use((res) => {
     return res.data
 }, (error) => {
     // 服务器响应失败的回调函数
+    nprogress.done();
     return Promise.reject(error)
 })
 

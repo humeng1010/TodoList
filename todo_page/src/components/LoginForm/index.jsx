@@ -1,11 +1,17 @@
 import React from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
+import { login } from '../../api'
 const LoginForm = (props) => {
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         // 登陆api，登陆成功 立马 同步存储，并提示云端存储成功
-        // 。。。。。
-        props.setIsModalOpen(false)
-        console.log('Success:', values);
+        try {
+            const data = await login(JSON.stringify(values))
+            console.log(data);
+            props.setIsModalOpen(false)
+            console.log('Success:', values);
+        } catch (error) {
+            console.log(error);
+        }
     };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
@@ -52,16 +58,7 @@ const LoginForm = (props) => {
                 <Input.Password />
             </Form.Item>
 
-            <Form.Item
-                name="remember"
-                valuePropName="checked"
-                wrapperCol={{
-                    offset: 9,
-                    span: 15,
-                }}
-            >
-                <Checkbox>记住我</Checkbox>
-            </Form.Item>
+
 
             <Form.Item
                 wrapperCol={{
