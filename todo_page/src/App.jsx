@@ -7,38 +7,76 @@ import Footer from './components/Footer'
 import './App.css'
 import Nav from './components/Nav'
 
-import { checkLogin } from './api'
+import { addTodos, checkLogin, getTodosByPhone } from './api'
+
+import PubSub from 'pubsub-js'
+import { ISLOGGEDIN } from './pubsubConstant'
 
 
 export default class App extends Component {
     // 初始化状态
     state = {
-        todos: []
+        todos: [],
+        isLogin: false
+    }
+    // 获取todos
+    getTodos = async (phone) => {
+        const res = await getTodosByPhone(phone)
+        if (res.isSuccess) {
+            this.setState({ todos: res.data.reverse() })
+        }
     }
     // 组件挂载完毕的钩子
-    componentDidMount() {
-        // 从本地取出数据,防止没有数据报错
-        const todos = JSON.parse(localStorage.getItem('todos') || '[]')
-        // 更新状态
-        this.setState({ todos })
+    async componentDidMount() {
+        PubSub.subscribe(ISLOGGEDIN, (_, data) => {
+            console.log(data);
+            this.setState({ isLogin: data })
+        })
+        const isLogin = await checkLogin()
+        this.setState({ isLogin })
+        if (isLogin) {
+            // const res = await 
+            this.getTodos(sessionStorage.getItem('token'))
+            // console.log('1', res);
+            /* if (res.isSuccess) {
+                this.setState({ todos: res.data })
+            } */
+        } else {
+            // 从本地取出数据,防止没有数据报错
+            // const todos = JSON.parse(localStorage.getItem('todos') || '[]')
+            // 更新状态
+        }
+
+        // this.setState({ todos })
     }
     // 组件完成更新的钩子
     componentDidUpdate() {
         // 设置数据
-        localStorage.setItem('todos', JSON.stringify(this.state.todos))
+        // localStorage.setItem('todos', JSON.stringify(this.state.todos))
+        // this.getTodos(sessionStorage.getItem('token'))
+
     }
+
     addTodo = async (name) => {
-        const isLogin = await checkLogin()
-        console.log(isLogin);
+        // const isLogin = await checkLogin()
+        const { isLogin } = this.state
+        const { todos } = this.state
+        const todo = {
+            name,
+            done: false
+        }
         if (isLogin) {
+            // 新增api
+            todo.phone = sessionStorage.getItem('token')
+            const res = await addTodos(todo)
+            console.log(res);
+            if (res.isSuccess) {
+                this.getTodos(sessionStorage.getItem('token'))
+
+            }
 
         } else {
-            const { todos } = this.state
-            const todo = {
-                id: (todos.length + 1),
-                name,
-                done: false
-            }
+            todo.id = (todos.length + 1)
             this.setState({ todos: [todo, ...todos] })
         }
 

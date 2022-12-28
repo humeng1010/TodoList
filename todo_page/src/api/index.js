@@ -20,3 +20,31 @@ export const register = (data) => req({ method: 'PUT', url: '/user/register', da
  * @returns 
  */
 export const getNikeByPhone = (phone) => req({ method: 'GET', url: `/user/${phone}` })
+
+/**
+ * 新增todo
+ * @param {string} data 
+ * @returns 
+ */
+export const addTodos = (data) => req({ method: 'POST', url: '/todos/add', data })
+
+/**
+ * 根据手机号获取todos
+ * @param {string} phone 
+ * @returns 
+ */
+export const getTodosByPhone = (phone) => req({ method: 'GET', url: `/todos/${phone}` })
+
+/**
+ * 根据id更新事项完成状态
+ * @param {object} data 
+ * @returns 
+ */
+export const updateDoneById = (data) => req({ method: 'PUT', url: '/todos/update', data })
+
+/**
+ * 根据id删除事项
+ * @param {number} id 
+ * @returns 
+ */
+export const deleteById = (id) => req({ method: 'DELETE', url: '/todos/delete', data: id })

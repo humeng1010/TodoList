@@ -19,8 +19,6 @@ export default function Nav() {
         // 如果有token再发送请求
         if (token) {
             getNikeByPhone(token).then((value) => {
-                console.log(value);
-                console.log(value.data);
                 setNickName(value.data === null ? <div style={{ color: '#ff4d4f' }}>登陆已失效,请退出重新登陆</div> : value.data)
             })
         }
