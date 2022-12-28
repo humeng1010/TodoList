@@ -7,6 +7,8 @@ import Footer from './components/Footer'
 import './App.css'
 import Nav from './components/Nav'
 
+import { checkLogin } from './api'
+
 
 export default class App extends Component {
     // 初始化状态
@@ -15,8 +17,8 @@ export default class App extends Component {
     }
     // 组件挂载完毕的钩子
     componentDidMount() {
-        // 从本地取出数据
-        const todos = JSON.parse(localStorage.getItem('todos'))
+        // 从本地取出数据,防止没有数据报错
+        const todos = JSON.parse(localStorage.getItem('todos') || '[]')
         // 更新状态
         this.setState({ todos })
     }
@@ -25,15 +27,21 @@ export default class App extends Component {
         // 设置数据
         localStorage.setItem('todos', JSON.stringify(this.state.todos))
     }
-    addTodo = (name) => {
-        const { todos } = this.state
-        const todo = {
-            id: (todos.length + 1),
-            name,
-            done: false
+    addTodo = async (name) => {
+        const isLogin = await checkLogin()
+        console.log(isLogin);
+        if (isLogin) {
+
+        } else {
+            const { todos } = this.state
+            const todo = {
+                id: (todos.length + 1),
+                name,
+                done: false
+            }
+            this.setState({ todos: [todo, ...todos] })
         }
-        todos.unshift(todo)
-        this.setState({ todos })
+
     }
     // 用于更新一个todo对象
     updateTodo = (id, done) => {

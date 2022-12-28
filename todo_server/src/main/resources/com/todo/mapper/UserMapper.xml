@@ -15,7 +15,7 @@
         values (#{phone},#{password},#{nick},#{gender});
     </insert>
 
-    <select id="hasRegister" resultType="user">
+    <select id="hasRegister" parameterType="string" resultType="user">
         select *
         from tb_user where phone = #{phone};
     </select>

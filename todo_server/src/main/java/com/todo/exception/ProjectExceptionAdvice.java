@@ -15,6 +15,7 @@ public class ProjectExceptionAdvice {
      */
     @ExceptionHandler(Exception.class)
     public Result doException(Exception exception){
+//        TODO:开发完成后修改为服务器异常,请稍后再试
         return Result.fail(exception.getMessage());
     }
 }
