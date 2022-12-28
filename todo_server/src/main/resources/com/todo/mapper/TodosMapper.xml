@@ -4,4 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.todo.mapper.TodosMapper">
 
+    <insert id="addTodos" parameterType="todos">
+        insert into tb_todos (name, done, phone)
+        values (#{name},#{done},#{phone});
+    </insert>
+    <select id="getTodosByPhone" resultType="todos">
+        select *
+        from tb_todos where phone = #{phone};
+    </select>
 </mapper>

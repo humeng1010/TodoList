@@ -78,7 +78,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result getUserNameByPhone(String phone) {
         String name = userMapper.getUserNameByPhone(phone);
-        System.out.println(name);
         if (StrUtil.isBlank(name)){
             return  Result.fail("请先登陆哦~");
         }
