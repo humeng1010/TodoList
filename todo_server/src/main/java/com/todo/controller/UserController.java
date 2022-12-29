@@ -22,6 +22,7 @@ public class UserController {
 
     /**
      * 检查用户是否登陆,返回前端状态信息,使前端动态处理是否需要云存储
+     *
      * @param session
      * @param request
      * @return
@@ -41,35 +42,39 @@ public class UserController {
 
     /**
      * 登陆接口
+     *
      * @param user 用户(只包含手机号,和密码)
      * @return Result
      */
     @PostMapping("/login")
-    public Result login(@RequestBody User user, HttpSession session){
-        return userService.login(user.getPhone(),user.getPassword(),session);
+    public Result login(@RequestBody User user, HttpSession session) {
+        return userService.login(user.getPhone(), user.getPassword(), session);
     }
 
     /**
      * 注册接口
+     *
      * @param user 用户
      * @return Result
      */
     @PutMapping("/register")
-    public Result register(@RequestBody User user){
+    public Result register(@RequestBody User user) {
         return userService.register(user);
     }
 
     /**
      * 检查手机号是否重复
+     *
      * @param phone
      * @return
      */
     @PostMapping("/check")
-    public Result checkPhone(@RequestBody String phone){
+    public Result checkPhone(@RequestBody String phone) {
         return userService.checkPhone(phone);
     }
+
     @GetMapping("/{phone}")
-    public Result getUserNameByPhone(@PathVariable String phone){
+    public Result getUserNameByPhone(@PathVariable String phone) {
         return userService.getUserNameByPhone(phone);
     }
 

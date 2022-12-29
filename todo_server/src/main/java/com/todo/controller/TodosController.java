@@ -13,23 +13,22 @@ public class TodosController {
     private TodosService todosService;
 
     @PostMapping("/add")
-   public Result addTodos(@RequestBody Todos todos){
+    public Result addTodos(@RequestBody Todos todos) {
         return todosService.addTodos(todos);
-   }
+    }
 
-   @GetMapping("/{phone}")
-   public Result getTodosByPhone(@PathVariable String phone){
-       System.out.println(phone);
+    @GetMapping("/{phone}")
+    public Result getTodosByPhone(@PathVariable String phone) {
         return todosService.getTodosByPhone(phone);
-   }
+    }
 
-   @PutMapping("/update")
-   public Result updateDoneById(@RequestBody Todos todos){
+    @PutMapping("/update")
+    public Result updateDoneById(@RequestBody Todos todos) {
         return todosService.updateDoneById(todos);
-   }
+    }
 
-   @DeleteMapping("/delete")
-   public Result deleteById(@RequestBody Integer id){
+    @DeleteMapping("/delete")
+    public Result deleteById(@RequestBody Integer id) {
         return todosService.deleteById(id);
-   }
+    }
 }
