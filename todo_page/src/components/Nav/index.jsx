@@ -6,11 +6,12 @@ import LoginForm from '../LoginForm';
 import RegisterForm from '../RegisterForm'
 import PubSub from 'pubsub-js'
 import { ISLOGGEDIN } from '../../pubsubConstant';
-import { checkLogin, getNikeByPhone } from '../../api';
+import { getNikeByPhone } from '../../api';
 
-export default function Nav() {
-    const [isLogin, setIsLogin] = useState(false)
+export default function Nav(props) {
     const [nickName, setNickName] = useState('')
+
+    const { isLogin } = props
 
     const [messageApi, contextHolder] = message.useMessage()
 
@@ -26,44 +27,38 @@ export default function Nav() {
 
     useEffect(() => {
         // 第一次挂载
-        checkLogin().then((value) => {
-            setIsLogin(value)
-            if (value) {
-                messageApi.open({
-                    type: 'success',
-                    content: '您已登陆，可享用云服务(*^▽^*)'
-                })
-            } else {
-                messageApi.open({
-                    type: 'warning',
-                    content: '您还未登陆，不可享用云服务[○･｀Д´･ ○]',
-                    style: {
-                        marginTop: '60px'
-                    }
-                })
+        if (isLogin) {
+            messageApi.open({
+                type: 'success',
+                content: '已登陆，可享用云服务(*^▽^*)'
+            })
+        } else {
+            messageApi.open({
+                type: 'warning',
+                content: '您还未登陆，不可享用云服务[○･｀Д´･ ○]',
+            })
+        }
+        getNike()
+        const sub = PubSub.subscribe(ISLOGGEDIN, (_, data) => {
+            if (data) {
+                getNike()
             }
         })
-        getNike()
 
-        const sub = PubSub.subscribe(ISLOGGEDIN, (_, data) => {
-            setIsLogin(data)
-            getNike()
-        })
         return () => {
             PubSub.unsubscribe(sub)
         }
-    }, [messageApi])
+    }, [messageApi, isLogin])
 
     const exit = () => {
         // 退出登陆，清除sessionStorage，刷新页面，修改登陆状态，消息提示
         // TODO
         sessionStorage.clear()
-        setIsLogin(false)
         messageApi.open({
             type: 'warning',
-            content: '您已退出登陆，下方待办事项来源本地'
+            content: '您已退出登陆'
         })
-
+        window.location.href = "/"
     }
     // 注册的模态框控制状态
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -100,7 +95,7 @@ export default function Nav() {
                 <RegisterForm setIsModalOpen={setIsModalOpen} />
             </Modal>
             <Modal title="登陆" open={isModalOpen2} onOk={handleOk2} onCancel={handleCancel2} footer={null}>
-                <LoginForm setIsModalOpen={setIsModalOpen2} setIsLogin={setIsLogin} />
+                <LoginForm setIsModalOpen={setIsModalOpen2} />
             </Modal>
             {/* --------------------------------------------------- */}
             <Avatar style={{ display: isLogin ? 'block' : 'none' }} shape="square" size="large" icon={<UserOutlined />} />

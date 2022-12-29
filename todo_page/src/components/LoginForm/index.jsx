@@ -18,10 +18,7 @@ const LoginForm = (props) => {
                     type: 'success',
                     content: data.msg,
                 });
-                messageApi.open({
-                    type: 'success',
-                    content: '您已登陆，可享用云服务(*^▽^*)'
-                })
+
                 // 再次请求后端，确定是否登陆，获取bool值方便后续判断
                 const isLoggedIn = await checkLogin()
                 // 发布消息，用户登陆成功了；订阅的组件有Nav、
