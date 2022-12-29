@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './index.css'
 import { Button } from 'antd'
-import 'animate.css/animate.min.css';
 export default class Item extends Component {
     state = {
         mouse: false
