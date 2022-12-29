@@ -1,7 +1,19 @@
 # TodoList
 
 ## 前言
-一个简单的todoList小项目，支持云端同步功能(需要注册账号并且登陆)，前端使用React框架和Antd组件库构建，后端使用SSM框架连接MySQL数据库，前后端分离的小项目，并使用了Java设计模式优化代码。
+一个简单的todoList小项目，支持云端同步功能(需要注册账号并且登陆)，前端使用React框架和Antd组件库构建，后端使用SSM框架连接MySQL数据库，前后端分离的小项目
+
+使用到的设计模式
+
+- 对象传输模式
+- 拦截过滤器模式
+- MVC模式
+- 控制反转模式
+- 依赖注入模式
+
+软件架构为
+
+- 分层架构
 
 ## 技术栈
 
@@ -40,7 +52,7 @@ npm run start
 
 安装`Maven Help`插件用来启动项目
 
-<img src="https://raw.githubusercontent.com/redyouzi/images-for-blog/main/img02/202212291616289.png" alt="image-20221229161656137" style="zoom:50%;float:left" />
+<img src="https://gitee.com/xiaohugitee/todo-list/raw/master/pic/mavenhelp.png" alt="image-20221229161656137" style="zoom:50%;float:left" />
 
 右键点击项目选择`run maven`,再选择`tomcat7:run`运行项目
 
