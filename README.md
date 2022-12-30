@@ -2,7 +2,6 @@
 
 ## 前言
 
-<span style="font-weight:800;color:skyblue;font-size:30px"><span style="font-size:80px;font-weight:900">D</span>eveloper：胡猛</span>
 
 一个简单的<span style="font-weight:800;color:skyblue;font-size:20px">TodoList</span>(📝记录待办事项)小项目，支持云端同步功能(需要注册账号并且登陆)，前端使用<span style="font-weight:800;color:skyblue;font-size:20px">React</span>框架和<span style="font-weight:800;color:skyblue;font-size:20px">Antd</span>组件库构建，后端使用<span style="font-weight:800;color:skyblue;font-size:20px">SSM</span>框架连接<span style="font-weight:800;color:skyblue;font-size:20px">MySQL</span>数据库，<span style="font-weight:600;color:skyblue;font-size:20px">前后端分离</span>的WEB小项目
 
